@@ -44,17 +44,22 @@ class Perceptron:
   threshold: int
 
 
-def percep_output(inputs, weights, bias, treshold) -> int:
+def percepOutput(inputs: List[List[int]], weights: List[List[float]], bias: List[float], treshold: float) -> int:
     return int(relu(np.dot(inputs, weights) + bias > threshold))
 
 n1 = NeuralNetwork(layer_n, layer_inputs, layer_weights, bias, threshold)
 
-# iterate through each layer
-for i in range(1, layer_n): 
-  # iterate through each perceptron  
-  c = 0
-  for percep in layer_inputs[i]:
-    layer_inputs[i][c] = percep_output(layer_inputs[i-1], layer_weights[i-1], bias[i-1], 0.5)
-    c+=1
+def forwardFeed(network):
+  """Forward Feed function"""
+  # iterate through each layer
+  for i in range(1, network.layer_n): 
+    # iterate through each perceptron  
+    c = 0
+    for percep in network.layer_inputs[i]:
+      network.layer_inputs[i][c] = percepOutput(network.layer_inputs[i-1], network.layer_weights[i-1], network.bias[i-1], 0.5)
+      c+=1
+  return network.layer_inputs
 
-print(f"Output: {layer_inputs[-1][0]}")
+output = forwardFeed(n1)
+
+print(f"The output from the Neural Network is {output[-1][0]}")
