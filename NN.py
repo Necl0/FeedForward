@@ -49,7 +49,7 @@ def percepOutput(inputs: List[List[int]], weights: List[List[float]], bias: List
 
 n1 = NeuralNetwork(layer_n, layer_inputs, layer_weights, bias, threshold)
 
-def forwardFeed(network):
+def forwardFeed(network) -> List[List[int]]:
   """Forward Feed function"""
   # iterate through each layer
   for i in range(1, network.layer_n): 
