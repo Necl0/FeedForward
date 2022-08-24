@@ -27,13 +27,13 @@ class NeuralNetwork:
   bias: List[float]
   threshold: float
 
-  def relu(self, num: int) -> int:
-    """Relu activation function: all layers except last"""
-    return max(0, num)
+def relu( num: int) -> int:
+  """Relu activation function: all layers except last"""
+  return max(0, num)
 
-  def sigmoid(self, num: int) -> float:
-    """Sigmoid activation function: last layer"""
-    return 1/(1+np.exp(-num))
+def sigmoid(num: int) -> float:
+  """Sigmoid activation function: last layer"""
+  return 1/(1+np.exp(-num))
 
 @dataclass
 class Perceptron:
@@ -45,9 +45,16 @@ class Perceptron:
 
 
 def percep_output(inputs, weights, bias, treshold) -> int:
-    return int(np.dot(inputs, weights)+ bias > threshold)
+    return int(relu(np.dot(inputs, weights) + bias > threshold))
 
 n1 = NeuralNetwork(layer_n, layer_inputs, layer_weights, bias, threshold)
 
-def feedforward(num_layers, layer_inputs, layer_weights, bias, treshold) -> int:
-  ouptut_n = int # output neuron
+# iterate through each layer
+for i in range(1, layer_n): 
+  # iterate through each perceptron  
+  c = 0
+  for percep in layer_inputs[i]:
+    layer_inputs[i][c] = percep_output(layer_inputs[i-1], layer_weights[i-1], bias[i-1], 0.5)
+    c+=1
+
+print(f"Output: {layer_inputs[-1][0]}")
