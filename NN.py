@@ -56,7 +56,7 @@ def forwardFeed(network):
     # iterate through each perceptron  
     c = 0
     for percep in network.layer_inputs[i]:
-      network.layer_inputs[i][c] = percepOutput(network.layer_inputs[i-1], network.layer_weights[i-1], network.bias[i-1], 0.5)
+      network.layer_inputs[i][c] = percepOutput(network.layer_inputs[i-1], network.layer_weights[i-1], network.bias[i-1], network.threshold)
       c+=1
   return network.layer_inputs
 
