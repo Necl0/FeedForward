@@ -11,19 +11,16 @@ for layer in range(1, layer_n+1):
   nodes = int(input(f"How many nodes in layer {layer}? "))
   layer_inputs.append([float() for i in range(nodes)])
 
-for i in range(1, len(layer_inputs)-1):
-  for node in layer_inputs[i]:
-    weight = uniform(0, 1)
-    layer_weights.append([uniform(0, 1) for node in layer_inputs[i+1]])
-
-
-
 
 bias = [uniform(0.0, 0.1) for j in range(layer_n)] # generate random bias values for each layer in the network
 threshold = 0.5 # default treshold value, halfway from 0-1
 layer_one = [*map(float, input(f"\nEnter in the inputs for the first layer ({len(layer_inputs[0])} inputs): ").split())]
 layer_inputs[0] = layer_one # set inputs to first layer of network
 
+for i in range(2, layer_n+1):
+  for node in layer_inputs[i-1]:
+    layer_weights.append([uniform(0,1) for i in range(len(layer_inputs[i-2]))])
+    
 @dataclass
 class NeuralNetwork:
   """Neural Network class"""
@@ -53,8 +50,6 @@ class Perceptron:
 def percepOutput(inputs: List[List[int]], weights: List[List[float]], bias: List[float]) -> float:
     return float(np.dot(inputs, weights) + bias)
 
-n1 = NeuralNetwork(layer_n, layer_inputs, layer_weights, bias, threshold)
-
 def forwardFeed(network) -> List[List[int]]:
   """Forward Feed function"""
   # iterate through each layer
@@ -66,3 +61,6 @@ def forwardFeed(network) -> List[List[int]]:
       print(network.layer_weights[i-1])
       c+=1
   return network.layer_inputs
+
+n1 = NeuralNetwork(layer_n, layer_inputs, layer_weights, bias, threshold)
+output = forwardFeed(n1)
