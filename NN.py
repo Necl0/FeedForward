@@ -18,11 +18,11 @@ threshold = 0.5 # default treshold value, halfway from 0-1
 layer_one = [*map(float, input(f"\nEnter in the inputs for the first layer ({len(layer_inputs[0])} inputs): ").split())]
 layer_inputs[0] = layer_one # set inputs to first layer of network
 
-# weight generation
 for i in range(2, layer_n+1):
   for node in layer_inputs[i-1]:
     layer_weights.append([uniform(0,1) for i in range(len(layer_inputs[i-2]))])
     
+
 @dataclass
 class NeuralNetwork:
   """Neural Network dataclass"""
@@ -53,17 +53,19 @@ def percepOutput(inputs: List[List[int]], weights: List[List[float]], bias: List
     """Perceptron output"""
     return float(np.dot(inputs, weights) + bias)
 
+n1 = NeuralNetwork(layer_n, layer_inputs, layer_weights, bias, threshold)
+
 def forwardFeed(network) -> List[List[int]]:
   """Forward Feed"""
   c = 0
   for n in range(1, network.layer_n):
+    a = 0
     for node in network.layer_inputs[n]:
-      node = percepOutput(network.layer_inputs[n-1], layer_weights[c] , network.bias[n-1])
-      print(layer_weights[c])
+      network.layer_inputs[n][a] = percepOutput(network.layer_inputs[n-1], layer_weights[c] , network.bias[n-1])
+      a+=1
       c+=1
   return network.layer_inputs[-1]
 
-n1 = NeuralNetwork(layer_n, layer_inputs, layer_weights, bias, threshold)
 output = forwardFeed(n1)
 
 print(f"The output from the Neural Network is {output}")
