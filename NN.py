@@ -60,7 +60,7 @@ def forwardFeed(network) -> List[List[int]]:
   c = 0
   for n in range(1, network.layer_n):
     a = 0
-    for node in network.layer_inputs[n]:
+    for _ in network.layer_inputs[n]:
       network.layer_inputs[n][a] = percepOutput(network.layer_inputs[n-1], layer_weights[c] , network.bias[n-1])
       a+=1
       c+=1
