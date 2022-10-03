@@ -53,8 +53,6 @@ def percepOutput(inputs: List[List[int]], weights: List[List[float]], bias: List
     """Perceptron output"""
     return float(np.dot(inputs, weights) + bias)
 
-n1 = NeuralNetwork(layer_n, layer_inputs, layer_weights, bias, threshold)
-
 def forwardFeed(network) -> List[List[int]]:
   """Forward Feed"""
   c = 0
@@ -66,6 +64,7 @@ def forwardFeed(network) -> List[List[int]]:
       c+=1
   return network.layer_inputs[-1]
 
+n1 = NeuralNetwork(layer_n, layer_inputs, layer_weights, bias, threshold)
 output = forwardFeed(n1)
 
 print(f"The output from the Neural Network is {output}")
